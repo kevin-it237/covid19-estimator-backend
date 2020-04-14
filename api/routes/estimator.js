@@ -27,7 +27,7 @@ router.get("/logs", (req, res, next) => {
         logs.forEach(raw => {
             logsText += raw.log+"\n"
         });
-        res.header({'Content-Type': 'text/plain;charset=utf-8'})
+        res.type({'Content-Type': 'text/plain;charset=utf-8'})
         res.status(200).send(logsText)
     })
     .catch(err => {
