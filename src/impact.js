@@ -14,24 +14,24 @@ const processImpact = (data, severity) => {
     const timeToElapseInDays = normalizeDuration(data.periodType, data.timeToElapse);
     /** infections By Requested Time */
     const infectionsByRequestedTime = currentlyInfected
-        * (2 ** Math.floor(timeToElapseInDays / 3));
+        * (2 ** Math.trunc(timeToElapseInDays / 3));
 
     // Challenge 2
     /** number of severe positive cases that will require hospitalization */
-    const severeCasesByRequestedTime = Math.floor((infectionsByRequestedTime * 15) / 100);
+    const severeCasesByRequestedTime = Math.trunc((infectionsByRequestedTime * 15) / 100);
     /** total number of available beds */
     const totalAvailableBeds = (data.totalHospitalBeds * 35) / 100;
     /** number of available beds by requested time */
-    const hospitalBedsByRequestedTime = Math.floor(totalAvailableBeds
-        - severeCasesByRequestedTime) + 1;
+    const hospitalBedsByRequestedTime = Math.trunc(totalAvailableBeds
+        - severeCasesByRequestedTime);
 
     // Challenge 3
     /** number of severe positive cases that will require ICU care. */
-    const casesForICUByRequestedTime = Math.floor((infectionsByRequestedTime * 5) / 100);
+    const casesForICUByRequestedTime = Math.trunc((infectionsByRequestedTime * 5) / 100);
     /** number of severe positive cases that will require ventilators. */
-    const casesForVentilatorsByRequestedTime = Math.floor((infectionsByRequestedTime * 2) / 100);
+    const casesForVentilatorsByRequestedTime = Math.trunc((infectionsByRequestedTime * 2) / 100);
     /** estimate how much money the economy is likely to lose daily */
-    const dollarsInFlight = Math.floor((infectionsByRequestedTime
+    const dollarsInFlight = Math.trunc((infectionsByRequestedTime
         * data.region.avgDailyIncomePopulation
         * data.region.avgDailyIncomeInUSD) / timeToElapseInDays);
     return {
