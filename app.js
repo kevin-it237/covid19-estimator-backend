@@ -19,7 +19,6 @@ db.once('open', function() {
 })
 
 let app = express();
-app.use(express.json());
 
 // Parse incoming requests data
 app.use(bodyParser.json());
